@@ -2,16 +2,16 @@
 import { ref } from 'vue'
 
 const listaCompras = ref([
-  { nome: 'São Paulo', quantidade: 1 },
-  { nome: 'Rio de Janeiro', quantidade: 2 },
-  { nome: 'Belo Horizonte', quantidade: 3 },
-  { nome: 'Salvador', quantidade: 3 },
-  { nome: 'Fortaleza', quantidade: 3 },
-  { nome: 'Curitiba', quantidade: 3 },
-  { nome: 'Manaus', quantidade: 3 },
-  { nome: 'Recife', quantidade: 3 },
-  { nome: 'Porto Alegre', quantidade: 3 },
-  { nome: 'Brasília', quantidade: 3 }
+  { nome: 'Camisa Larga ', quantidade: 1 },
+  { nome: 'Calça Xadrez', quantidade: 2 },
+  { nome: 'Chinelo Cartago', quantidade: 3 },
+  { nome: 'Bone Oakley', quantidade: 3 },
+  { nome: 'Tenis Tesla', quantidade: 3 },
+  { nome: 'Relogio Tommi Hilfiger', quantidade: 3 },
+  { nome: 'Relogio Rolex', quantidade: 3 },
+  { nome: 'Relogio Tiempo', quantidade: 3 },
+  { nome: 'Perfume Pacu Rabane', quantidade: 3 },
+  { nome: 'Perfume Ferrari', quantidade: 3 }
 ])
 
 function incrementar(index) {
@@ -21,11 +21,19 @@ function incrementar(index) {
 </script>
 
 <template>
+  <div class="carrinho">
+<button data-bs-toggle="collapse" data-bs-target="#demo">Carrinho</button>
+
+<div id="demo" class="collapse">
   <ul>
     <li v-for="(item, index) in listaCompras">{{ item.nome }} - {{ item.quantidade }} <button @click="incrementar(index)">Incrementar</button></li>
   </ul>
+</div> 
+  </div>
 </template>
 
 <style scoped>
-
+.carrinho{
+  margin-top: 5%;
+}
 </style>
