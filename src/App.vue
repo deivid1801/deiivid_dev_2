@@ -17,23 +17,30 @@ const listaCompras = ref([
 function incrementar(index) {
   listaCompras.value[index].quantidade++
 }
+function remover(index) {
+  if(listaCompras.value[index].quantidade > 0){
+    listaCompras.value[index].quantidade--
+  }  
 
+}
 </script>
 
 <template>
-  <div class="carrinho">
+  <div class="carrinho" style="margin-top: 0.50%; margin-left: 0.1%; ">
 <button data-bs-toggle="collapse" data-bs-target="#demo">Carrinho</button>
 
 <div id="demo" class="collapse">
   <ul>
-    <li v-for="(item, index) in listaCompras">{{ item.nome }} - {{ item.quantidade }} <button @click="incrementar(index)">Incrementar</button></li>
+    <li v-for="(item, index) in listaCompras">{{ item.nome }} = {{ item.quantidade }} <button @click="incrementar(index)">Incrementar</button>
+      <button @click="remover(index)">Remover</button></li>
   </ul>
 </div> 
+<div>
+  
+</div>
   </div>
 </template>
 
 <style scoped>
-.carrinho{
-  margin-top: 5%;
-}
+
 </style>
