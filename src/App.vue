@@ -1,46 +1,117 @@
 <script setup>
 import { ref } from 'vue'
-
-const listaCompras = ref([
-  { nome: 'Camisa Larga ', quantidade: 1 },
-  { nome: 'Calça Xadrez', quantidade: 2 },
-  { nome: 'Chinelo Cartago', quantidade: 3 },
-  { nome: 'Bone Oakley', quantidade: 3 },
-  { nome: 'Tenis Tesla', quantidade: 3 },
-  { nome: 'Relogio Tommi Hilfiger', quantidade: 3 },
-  { nome: 'Relogio Rolex', quantidade: 3 },
-  { nome: 'Relogio Tiempo', quantidade: 3 },
-  { nome: 'Perfume Pacu Rabane', quantidade: 3 },
-  { nome: 'Perfume Ferrari', quantidade: 3 }
+const produtos = ref([
+    {
+        id: 1,
+        nome: 'Camiseta',
+        preco: 49.90,
+        quantidade: 1
+    },
+    {
+        id: 2,
+        nome: 'Calça',
+        preco: 99.90,
+        quantidade: 1
+    },
+    {
+        id: 3,
+        nome: 'Meia',
+        preco: 9.90,
+        quantidade: 1
+    },
+    {
+        id: 4,
+        nome: 'Sapato',
+        preco: 199.90,
+        quantidade: 1
+    },
+    {
+        id: 5,
+        nome: 'Boné',
+        preco: 29.90,
+        quantidade: 1
+    },
+    {
+        id: 6,
+        nome: 'Óculos',
+        preco: 99.90,
+        quantidade: 1
+    },
+    {
+        id: 7,
+        nome: 'Relógio',
+        preco: 299.90,
+        quantidade: 1
+    },
+    {
+        id: 8,
+        nome: 'Bermuda',
+        preco: 79.90,
+        quantidade: 1
+    },
+    {
+        id: 9,
+        nome: 'Cueca',
+        preco: 19.90,
+        quantidade: 1
+    },
+    {
+        id: 10,
+        nome: 'Meia',
+        preco: 9.90,
+        quantidade: 1
+    }
 ])
+const carrinho = ref([])
 
-function incrementar(index) {
-  listaCompras.value[index].quantidade++
-}
-function remover(index) {
-  if(listaCompras.value[index].quantidade > 0){
-    listaCompras.value[index].quantidade--
-  }  
+const botao = ref(false)
 
+function bot() {
+    botao.value = !botao.value; 
 }
+
+function adicionar(id) {
+    const index = carrinho.value.findIndex(item => item.id === id)
+    carrinho.value[index].quantidade++
+}
+
+function remover(id) {
+    const index = carrinho.value.findIndex(item => item.id === id)
+
+    if (carrinho.value[index].quantidade > 0) {
+        carrinho.value[index].quantidade--
+    }
+}
+
+function addToCart(id, nome, preco, quantidade) {
+    const precoTotal = preco * quantidade;
+    carrinho.value.push({id, nome, preco, quantidade, precoTotal});
+}
+
 </script>
 
 <template>
-  <div class="carrinho" style="margin-top: 0.50%; margin-left: 0.1%; ">
-<button data-bs-toggle="collapse" data-bs-target="#demo">Carrinho</button>
+ 
+    <div>
+        <ul>
+            <li v-for="item in produtos" :key="item.id">{{ item.nome }} - {{ item.preco.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }}
+                <button @click="addToCart(item.id, item.nome, item.preco, item.quantidade)" class="bot">adicionar ao carrinho</button>
+            </li>
+        </ul>
+    </div>
+    <button @click="bot" type="button" class="btn btn-primary" style="background-color: black;border-color: aliceblue;color: cadetblue;">Mostrar carrinho</button>
 
-<div id="demo" class="collapse">
-  <ul>
-    <li v-for="(item, index) in listaCompras">{{ item.nome }} = {{ item.quantidade }} <button @click="incrementar(index)">Incrementar</button>
-      <button @click="remover(index)">Remover</button></li>
-  </ul>
-</div> 
-<div>
-  
-</div>
-  </div>
+    <div v-if="botao">
+        <ul>
+            <li v-for="car in carrinho" :key="car.id">{{ car.nome }} - Qtd:{{ car.quantidade }}
+                <button @click="adicionar(car.id)">+</button>
+                <button @click="remover(car.id)">-</button>
+                <p>[Total: {{ car.precoTotal }}]</p>
+                <button @click="remover(item)" class="bot">retirar do carrinho</button>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <style scoped>
-
 </style>
