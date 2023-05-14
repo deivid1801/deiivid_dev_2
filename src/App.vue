@@ -62,9 +62,11 @@ const produtos = ref([
         quantidade: 1
     }
 ])
+
 const carrinho = ref([])
 
 const botao = ref(false)
+
 
 function bot() {
     botao.value = !botao.value; 
@@ -75,39 +77,42 @@ function adicionar(id) {
     carrinho.value[index].quantidade++
 }
 
-function remover(id) {
-    const index = carrinho.value.findIndex(item => item.id === id)
-
-    if (carrinho.value[index].quantidade > 0) {
-        carrinho.value[index].quantidade--
-    }
+function diminuir(id) {
+  const index = carrinho.value.findIndex(item => item.id === id)
+if(carrinho.value[index].quantidade > 0){
+    carrinho.value[index].quantidade--
 }
+}
+
+
 
 function addToCart(id, nome, preco, quantidade) {
-    const precoTotal = preco * quantidade;
-    carrinho.value.push({id, nome, preco, quantidade, precoTotal});
+    carrinho.value.push({id, nome, preco, quantidade});
 }
-
+function retirar(index){
+    carrinho.value.splice(index, 1)
+}
 </script>
 
 <template>
- 
+    <div class="container-fluid">
+    </div>
     <div>
         <ul>
             <li v-for="item in produtos" :key="item.id">{{ item.nome }} - {{ item.preco.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }}
-                <button @click="addToCart(item.id, item.nome, item.preco, item.quantidade)" class="bot">adicionar ao carrinho</button>
+                <button @click="addToCart(item.id, item.nome, item.preco, item.quantidade)" class="btn btn-outline-primary">adicionar ao carrinho</button>
+                <button @click="retirar(index)" class="btn btn-outline-primary">retirar do carrinho</button>
             </li>
         </ul>
     </div>
-    <button @click="bot" type="button" class="btn btn-primary" style="background-color: black;border-color: aliceblue;color: cadetblue;">Mostrar carrinho</button>
+    <button @click="bot" type="button" class="btn btn-primary">Mostrar carrinho</button>
 
     <div v-if="botao">
         <ul>
             <li v-for="car in carrinho" :key="car.id">{{ car.nome }} - Qtd:{{ car.quantidade }}
-                <button @click="adicionar(car.id)">+</button>
-                <button @click="remover(car.id)">-</button>
-                <p>[Total: {{ car.precoTotal }}]</p>
-                <button @click="remover(item)" class="bot">retirar do carrinho</button>
+                <button class="btn btn-info" @click="adicionar(car.id)">+</button>
+                <button class="btn btn-info" @click="diminuir(car.id)">-</button>
+                <p>Total a pagar:R$ {{ car.preco * car.quantidade }}</p>
             </li>
         </ul>
     </div>
