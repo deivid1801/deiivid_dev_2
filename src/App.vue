@@ -119,4 +119,10 @@ function retirar(index){
 </template>
 
 <style scoped>
+.container-geral{
+    /*display: flex;
+    justify-content: space-between;*/
+    display: grid;
+    grid-template-columns: 3fr 1fr ;
+}
 </style>
